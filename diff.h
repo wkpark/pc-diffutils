@@ -19,6 +19,9 @@ the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include "system.h"
 #include <stdio.h>
+#ifdef __IBMC__
+#include <popen.h>
+#endif
 #include "regex.h"
 
 #define TAB_WIDTH 8

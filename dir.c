@@ -91,7 +91,7 @@ dir_sort (dir, dirdata)
 	  data_used += d_size;
 	  nnames++;
 	}
-      if (errno)
+      if (errno && errno != ENOENT)
 	{
 	  int e = errno;
 	  closedir (reading);

@@ -687,7 +687,9 @@ static int const sigs[] = {
        SIGXFSZ,
 #endif
        SIGINT,
-       SIGPIPE
+#ifdef SIGPIPE
+       SIGPIPE,
+#endif
 };
 
 /* Prefer `sigaction' if it is available, since `signal' can lose signals.  */
@@ -783,9 +785,11 @@ checksigs ()
     {
       cleanup ();
 
+#if 0
       /* Yield an exit status indicating that a signal was received.  */
       untrapsig (s);
       kill (getpid (), s);
+#endif
 
       /* That didn't work, so exit with error status.  */
       exit (2);

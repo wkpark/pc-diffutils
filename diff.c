@@ -572,7 +572,11 @@ main (argc, argv)
 	     On Posix hosts, this has no effect.  */
 #if HAVE_SETMODE
 	  binary_I_O = 1;
+#ifdef __IBMC__
+	  freopen("", "wb", stdout);
+#else
 	  setmode (STDOUT_FILENO, O_BINARY);
+#endif
 #endif
 	  break;
 
@@ -982,6 +986,15 @@ compare_files (dir0, name0, dir1, name1, depth)
 	    }
 	  else
 	    stat_result = stat (inf[i].name, &inf[i].stat);
+
+#ifdef __EMX__
+	  /* HACK: Treat 'nul' as a nonexistent file. */
+	  if (stat_result != 0 && errno == EINVAL && stricmp (inf[i].name, "nul") == 0)
+	    {
+	      stat_result = 0;
+	      inf[i].desc = -1;
+	    }
+#endif /*__EMX__*/
 
 	  if (stat_result != 0)
 	    {
