@@ -101,7 +101,6 @@ emxnt: pc/config.h
 
 mingw32: pc/config.h
 	$(MAKE) -f pc/Makefile all \
-		CC="gcc" CFLAGS="-O" \
 		o=.o OUT="-o ./" LDFLAGS="-s" DLDFLAGS="-mdll" \
 		LIBOBJS="popen.o pc.o dirent.o" REGEX="regex.o" 
 
